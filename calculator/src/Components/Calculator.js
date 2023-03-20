@@ -177,7 +177,9 @@ export default function Calculator() {
                             <NumberButton storeOperand={storeOperand} key={i + 1} number={i + 1} />
                         )
                     }
-                    <NumberButton id="zero" storeOperand={storeOperand} number={0}/>
+                    <div className='button' onClick={() => storeOperand(0)}>
+                        <div className='number'>0</div>
+                    </div>
                     { selectedMode === 1 && <CSVLink className="log-btn" data={log} headers={headers}>Log</CSVLink> }
                     { selectedMode === 2 && <OperatorButton operation={enter} operator={'Enter'} /> }
                     { selectedMode === 3 &&
