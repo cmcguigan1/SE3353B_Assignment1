@@ -1,0 +1,14 @@
+.operator-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.operator-button:hover {
+    background-color: rgb(53, 53, 53);
+    cursor: pointer;
+}
+
+.operator {
+    color: white;
+    font-size: 3rem;
+}

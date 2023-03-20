@@ -1,0 +1,15 @@
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(93, 93, 93);
+}
+.button:hover{
+    background-color: rgb(53, 53, 53);
+    cursor: pointer;
+}
+
+.number {
+    color: white;
+    font-size: 3rem;
+}

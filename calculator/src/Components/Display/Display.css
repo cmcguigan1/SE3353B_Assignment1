@@ -1,0 +1,13 @@
+#display {
+    height: 10rem;
+    background-color: rgb(37, 37, 37);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.output {
+    color: red;
+    font-size: 8rem;
+}

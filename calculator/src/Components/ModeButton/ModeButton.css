@@ -1,0 +1,15 @@
+.mode-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+}
+.mode-button:hover {
+    background-color: orange;
+    cursor: pointer;
+}
+
+.mode {
+    color: white;
+    font-size: 2rem;
+}
