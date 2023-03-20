@@ -6,6 +6,8 @@ import NumberButton from './NumberButton/NumberButton.js';
 import ModeButton from './ModeButton/ModeButton.js';
 import OperatorButton from './OperatorButton/OperatorButton.js';
 
+const math = require('mathjs');
+
 export default function Calculator() {
     const [selectedMode, setSelectedMode] = useState(1);
     const [output, setOutput] = useState("0");
@@ -14,9 +16,75 @@ export default function Calculator() {
         setOutput("0");
         setSelectedMode(1);
     }
-    
+
     const evaluate = (x) => {
         console.log("in eval");
+        if (selectedMode === 3) {
+            try {
+                let result = math.evaluate(output);
+                setOutput(result);
+            }
+            catch (err) {
+                setOutput('err');
+            }
+        }
+        else {
+            let arrayOfNumbers = output.split(/[*,/,+,-]+/); // array of just the numbers
+            let result = 0; // holding the running calculated result
+            let i = 0; // pointer for the array of numbers
+            try {
+                for (let char of output) {
+                    // if we're looking at the first number
+                    if (i == 0) {
+                        if (char === '+') {
+                            result = (Number(arrayOfNumbers[i]) + Number(arrayOfNumbers[i + 1]));
+                            i += 2;
+                        }
+                        else if (char === '*') {
+                            result = (Number(arrayOfNumbers[i]) * Number(arrayOfNumbers[i + 1]));
+                            i += 2;
+                        }
+                        else if (char === '-') {
+                            result = (Number(arrayOfNumbers[i]) - Number(arrayOfNumbers[i + 1]));
+                            i += 2;
+                        }
+                        else if (char === '/') {
+                            result = (Number(arrayOfNumbers[i]) / Number(arrayOfNumbers[i + 1]));
+                            i += 2;
+                        }
+                        else { }
+                    }
+                    // otherwise, use the result as one of the operands
+                    else {
+                        if (char === '+') {
+                            result = (result + Number(arrayOfNumbers[i]));
+                            i += 1;
+                        }
+                        else if (char === '*') {
+                            result = (result * Number(arrayOfNumbers[i]));
+                            i += 1;
+                        }
+                        else if (char === '-') {
+                            result = (result - Number(arrayOfNumbers[i]));
+                            i += 1;
+                        }
+                        else if (char === '/') {
+                            result = (result / Number(arrayOfNumbers[i]));
+                            i += 1;
+                        }
+                        else { }
+                    }
+                }
+                setOutput(String(result));
+            }
+            catch (err) {
+                setOutput('err');
+            }
+        }
+    }
+
+    const enter = (x) => {
+        console.log("in enter");
     }
 
     const storeOperator = (operator) => {
@@ -25,10 +93,10 @@ export default function Calculator() {
 
     const storeOperand = (number) => {
         setOutput((prev) => {
-            if(prev === "0"){
+            if (prev === "0") {
                 return number;
             }
-            else{
+            else {
                 return prev + `${number}`;
             }
         });
@@ -51,16 +119,16 @@ export default function Calculator() {
                 <div id='number-btns'>
                     {
                         [...Array(9)].map((x, i) =>
-                            <NumberButton storeOperand={storeOperand} key={i+1} number={i + 1} />
+                            <NumberButton storeOperand={storeOperand} key={i + 1} number={i + 1} />
                         )
                     }
-                    <NumberButton storeOperand={storeOperand} key={0} className='button' number={0} />
-                    <div className='button'></div>
+                    <NumberButton storeOperand={storeOperand} key={0} number={0} />
+                    <OperatorButton operation={enter} operator={'Enter'} />
                     <OperatorButton operation={evaluate} operator={'='} />
                 </div>
                 <div id='operator-btns'>
                     <OperatorButton operation={storeOperator} operator={'/'} />
-                    <OperatorButton operation={storeOperator} operator={'x'} />
+                    <OperatorButton operation={storeOperator} operator={'*'} />
                     <OperatorButton operation={storeOperator} operator={'-'} />
                     <OperatorButton operation={storeOperator} operator={'+'} />
                 </div>
