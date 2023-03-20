@@ -3,13 +3,21 @@ import './Display.css';
 
 export default function Display(props){
     const [output, setOutput] = useState("0");
+    const [idNm, setIdNm] = useState("");
 
     useEffect(() => {
-        setOutput(props.output);
-    }, [output]);
+        if(props.log){
+            setIdNm("log");
+            setOutput(`[${props.output.join(", ")}]`);
+        }
+        else{
+            setIdNm("display");
+            setOutput(props.output);
+        }
+    }, [props.output]);
 
     return (
-        <div id="display">
+        <div id={idNm}>
             { output && <span className='output'>{output}</span> }
         </div>
     );

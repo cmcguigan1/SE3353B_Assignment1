@@ -7,6 +7,19 @@
     padding-right: 0.5rem;
 }
 
+#log {
+    height: 3rem;
+    background-color: rgb(37, 37, 37);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 0.5rem;
+}
+
+#log > * {
+    font-size: 2rem !important;
+}
+
 .output {
     color: red;
     font-size: 8rem;

@@ -138,7 +138,13 @@ export default function Calculator() {
 
     return (
         <div id="main-container">
-            <Display key={output} output={output} />
+            { selectedMode === 2 
+                ? <div>
+                    <Display log={true} key={stack} output={stack} />
+                    <Display key={output} output={output} />
+                </div>
+                : <Display key={output} output={output} />
+            }
             <div id='mode-btns' key={selectedMode}>
                 <OperatorButton operation={reset} className={'mode'} operator={'C'} />
                 <ModeButton key={1} switchMode={switchMode} selected={selectedMode == 1 ? true : false} mode={1} />
