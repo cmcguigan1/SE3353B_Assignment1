@@ -103,6 +103,7 @@ export default function Calculator() {
     }
 
     const switchMode = (mode) => {
+        setOutput("0");
         setSelectedMode(mode);
     }
 
@@ -123,7 +124,14 @@ export default function Calculator() {
                         )
                     }
                     <NumberButton storeOperand={storeOperand} key={0} number={0} />
-                    <OperatorButton operation={enter} operator={'Enter'} />
+                    { selectedMode === 1 && <OperatorButton operation={enter} operator={'Enter'} /> }
+                    { selectedMode === 2 && <OperatorButton operation={enter} operator={'Enter'} /> }
+                    { selectedMode === 3 &&
+                        <div id="parentheses-container">
+                            <OperatorButton operation={storeOperator} operator={'('} />
+                            <OperatorButton operation={storeOperator} operator={')'} />
+                        </div>
+                    }
                     <OperatorButton operation={evaluate} operator={'='} />
                 </div>
                 <div id='operator-btns'>

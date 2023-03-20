@@ -31,3 +31,7 @@
     font-size: 3rem;
 }
 
+#parentheses-container {
+    display: grid;
+    grid-template-columns: auto auto;
+}
