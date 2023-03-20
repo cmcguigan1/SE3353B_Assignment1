@@ -18,7 +18,7 @@ export default function Display(props){
 
     return (
         <div id={idNm}>
-            { output && <span className='output'>{output}</span> }
+            { output && <span key={output} className='output'>{output}</span> }
         </div>
     );
 }
