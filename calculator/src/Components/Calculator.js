@@ -11,6 +11,7 @@ const math = require('mathjs');
 export default function Calculator() {
     const [selectedMode, setSelectedMode] = useState(1);
     const [output, setOutput] = useState("0");
+    const [stack, setStack] = useState([]);
 
     const reset = (x) => {
         setOutput("0");
@@ -18,7 +19,6 @@ export default function Calculator() {
     }
 
     const evaluate = (x) => {
-        console.log("in eval");
         if (selectedMode === 3) {
             try {
                 let result = math.evaluate(output);
@@ -84,7 +84,36 @@ export default function Calculator() {
     }
 
     const enter = (x) => {
-        console.log("in enter");
+        setStack((oldArray) => [...oldArray, output]);
+        setOutput("0");
+    }
+
+    const evaluateV2 = (operator) => {
+        let popFromStackElement = null;
+        let updatedStack = [];
+
+        if(stack.length === 0){
+            popFromStackElement = 0;
+        }
+        else{
+            stack.forEach((e, i) => {
+                // if it's the last element in the array, pop it
+                if(i == stack.length-1){
+                    popFromStackElement = e;
+                }
+                else {
+                    updatedStack.push(e);
+                }
+            });
+        }
+        try{
+            let result = math.evaluate(`${output}${operator}${popFromStackElement}`);
+            setOutput(result);
+            setStack(updatedStack);
+        }
+        catch(err){
+            setOutput('err');
+        }
     }
 
     const storeOperator = (operator) => {
@@ -134,12 +163,20 @@ export default function Calculator() {
                     }
                     <OperatorButton operation={evaluate} operator={'='} />
                 </div>
-                <div id='operator-btns'>
-                    <OperatorButton operation={storeOperator} operator={'/'} />
-                    <OperatorButton operation={storeOperator} operator={'*'} />
-                    <OperatorButton operation={storeOperator} operator={'-'} />
-                    <OperatorButton operation={storeOperator} operator={'+'} />
-                </div>
+                { selectedMode === 2 
+                    ? <div id='operator-btns'>
+                        <OperatorButton operation={evaluateV2} operator={'/'} />
+                        <OperatorButton operation={evaluateV2} operator={'*'} />
+                        <OperatorButton operation={evaluateV2} operator={'-'} />
+                        <OperatorButton operation={evaluateV2} operator={'+'} />
+                    </div>
+                    : <div id='operator-btns'>
+                        <OperatorButton operation={storeOperator} operator={'/'} />
+                        <OperatorButton operation={storeOperator} operator={'*'} />
+                        <OperatorButton operation={storeOperator} operator={'-'} />
+                        <OperatorButton operation={storeOperator} operator={'+'} />
+                    </div>
+                }
             </div>
         </div>
     );
