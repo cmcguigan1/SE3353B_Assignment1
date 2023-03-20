@@ -6,10 +6,14 @@ export default function NumberButton(props){
 
     useEffect(() => {
         setNumber(props.number);
-    }, [number]);
+    }, [props.number]);
+
+    const onClick = () => {
+        props.storeOperand(number);
+    }
 
     return (
-        <div className="button">
+        <div onClick={onClick} className="button">
             { number && <div className='number'>{number}</div> }
         </div>
     );

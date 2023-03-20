@@ -8,7 +8,19 @@ import OperatorButton from './OperatorButton/OperatorButton.js';
 
 export default function Calculator() {
     const [selectedMode, setSelectedMode] = useState(1);
+    const [output, setOutput] = useState("0");
 
+
+    const storeOperand = (number) => {
+        setOutput((prev) => {
+            if(prev === "0"){
+                return number;
+            }
+            else{
+                return prev + `${number}`;
+            }
+        });
+    }
 
     const switchMode = (mode) => {
         setSelectedMode(mode);
@@ -16,7 +28,7 @@ export default function Calculator() {
 
     return (
         <div id="main-container">
-            <Display output={3} />
+            <Display key={output} output={output} />
             <div id='mode-btns' key={selectedMode}>
                 <OperatorButton className={'mode'} operator={'C'} />
                 <ModeButton key={1} switchMode={switchMode} selected={selectedMode == 1 ? true : false} mode={1} />
@@ -27,10 +39,10 @@ export default function Calculator() {
                 <div id='number-btns'>
                     {
                         [...Array(9)].map((x, i) =>
-                            <NumberButton key={i+1} number={i + 1} />
+                            <NumberButton storeOperand={storeOperand} key={i+1} number={i + 1} />
                         )
                     }
-                    <NumberButton key={0} className={'button'} number={0} />
+                    <NumberButton storeOperand={storeOperand} key={0} className='button' number={0} />
                     <div className='button'></div>
                     <OperatorButton operator={'='} />
                 </div>

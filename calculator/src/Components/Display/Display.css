@@ -3,8 +3,8 @@
     background-color: rgb(37, 37, 37);
     display: flex;
     align-items: center;
-    justify-content: center;
-    
+    justify-content: flex-end;
+    padding-right: 0.5rem;
 }
 
 .output {
