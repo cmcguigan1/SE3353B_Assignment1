@@ -1,4 +1,5 @@
 .mode-button {
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,4 +13,16 @@
 .mode {
     color: white;
     font-size: 2rem;
+}
+
+.mode-button-selected {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: orange;
+}
+.mode-button-selected:hover {
+    background-color: rgb(167, 109, 0);
+    cursor: pointer;
 }

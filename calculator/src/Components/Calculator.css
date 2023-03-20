@@ -10,7 +10,7 @@
 
 #mode-btns {
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: 10rem;
 }
 
@@ -24,4 +24,9 @@
     display: grid;
     grid-template-columns: auto auto auto;
     grid-template-rows: 10rem 10rem 10rem 10rem;
+}
+
+.number {
+    color: white;
+    font-size: 3rem;
 }
