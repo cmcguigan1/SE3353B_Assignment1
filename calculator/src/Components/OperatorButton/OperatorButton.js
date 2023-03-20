@@ -8,8 +8,12 @@ export default function OperatorButton(props){
         setOperator(props.operator);
     }, [operator]);
 
+    const onClick = () => {
+        props.operation(operator);
+    }
+
     return (
-        <div className="operator-button">
+        <div onClick={onClick} className="operator-button">
             { operator && <div className='operator'>{operator}</div> }
         </div>
     );

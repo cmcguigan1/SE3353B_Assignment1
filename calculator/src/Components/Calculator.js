@@ -10,6 +10,18 @@ export default function Calculator() {
     const [selectedMode, setSelectedMode] = useState(1);
     const [output, setOutput] = useState("0");
 
+    const reset = (x) => {
+        setOutput("0");
+        setSelectedMode(1);
+    }
+    
+    const evaluate = (x) => {
+        console.log("in eval");
+    }
+
+    const storeOperator = (operator) => {
+        setOutput((prev) => prev + ` ${operator} `);
+    }
 
     const storeOperand = (number) => {
         setOutput((prev) => {
@@ -30,7 +42,7 @@ export default function Calculator() {
         <div id="main-container">
             <Display key={output} output={output} />
             <div id='mode-btns' key={selectedMode}>
-                <OperatorButton className={'mode'} operator={'C'} />
+                <OperatorButton operation={reset} className={'mode'} operator={'C'} />
                 <ModeButton key={1} switchMode={switchMode} selected={selectedMode == 1 ? true : false} mode={1} />
                 <ModeButton key={2} switchMode={switchMode} selected={selectedMode == 2 ? true : false} mode={2} />
                 <ModeButton key={3} switchMode={switchMode} selected={selectedMode == 3 ? true : false} mode={3} />
@@ -44,13 +56,13 @@ export default function Calculator() {
                     }
                     <NumberButton storeOperand={storeOperand} key={0} className='button' number={0} />
                     <div className='button'></div>
-                    <OperatorButton operator={'='} />
+                    <OperatorButton operation={evaluate} operator={'='} />
                 </div>
                 <div id='operator-btns'>
-                    <OperatorButton operator={'/'} />
-                    <OperatorButton operator={'x'} />
-                    <OperatorButton operator={'-'} />
-                    <OperatorButton operator={'+'} />
+                    <OperatorButton operation={storeOperator} operator={'/'} />
+                    <OperatorButton operation={storeOperator} operator={'x'} />
+                    <OperatorButton operation={storeOperator} operator={'-'} />
+                    <OperatorButton operation={storeOperator} operator={'+'} />
                 </div>
             </div>
         </div>
