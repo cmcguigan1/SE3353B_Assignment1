@@ -35,3 +35,27 @@
     display: grid;
     grid-template-columns: auto auto;
 }
+
+
+.log-btn {
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 3rem;
+    text-decoration: none;
+}
+.log-btn:hover {
+    background-color: rgb(53,53,53);
+}
+
+#zero > * {
+    color: white;
+    font-size: 3rem;
+}
+
+#zero {
+    color: white;
+    font-size: 3rem;
+}

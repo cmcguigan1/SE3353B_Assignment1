@@ -5,6 +5,7 @@ import Display from './Display/Display.js';
 import NumberButton from './NumberButton/NumberButton.js';
 import ModeButton from './ModeButton/ModeButton.js';
 import OperatorButton from './OperatorButton/OperatorButton.js';
+import { CSVLink } from "react-csv";
 
 const math = require('mathjs');
 
@@ -12,10 +13,18 @@ export default function Calculator() {
     const [selectedMode, setSelectedMode] = useState(1);
     const [output, setOutput] = useState("0");
     const [stack, setStack] = useState([]);
+    const [log, setLog] = useState([]);
+
+    const headers = [
+        { label: "Keystroke", key: "keystroke" },
+        { label: "Timestamp", key: "timestamp" },
+        { label: "Mode", key: "mode" },
+    ];
 
     const reset = (x) => {
         setOutput("0");
         setSelectedMode(1);
+        appendLog("C");
     }
 
     const evaluate = (x) => {
@@ -81,11 +90,13 @@ export default function Calculator() {
                 setOutput('err');
             }
         }
+        appendLog("=");
     }
 
     const enter = (x) => {
         setStack((oldArray) => [...oldArray, output]);
         setOutput("0");
+        appendLog("enter");
     }
 
     const evaluateV2 = (operator) => {
@@ -114,10 +125,12 @@ export default function Calculator() {
         catch(err){
             setOutput('err');
         }
+        appendLog(operator);
     }
 
     const storeOperator = (operator) => {
         setOutput((prev) => prev + ` ${operator} `);
+        appendLog(operator);
     }
 
     const storeOperand = (number) => {
@@ -129,11 +142,17 @@ export default function Calculator() {
                 return prev + `${number}`;
             }
         });
+        appendLog(number);
     }
 
     const switchMode = (mode) => {
         setOutput("0");
         setSelectedMode(mode);
+    }
+
+    const appendLog = (keystroke) => {
+        let newEntry = {keystroke: keystroke, timestamp: Date.now(), mode: selectedMode};
+        setLog((oldArray) => [...oldArray, newEntry]);
     }
 
     return (
@@ -158,8 +177,8 @@ export default function Calculator() {
                             <NumberButton storeOperand={storeOperand} key={i + 1} number={i + 1} />
                         )
                     }
-                    <NumberButton storeOperand={storeOperand} key={0} number={0} />
-                    { selectedMode === 1 && <OperatorButton operation={enter} operator={'Enter'} /> }
+                    <NumberButton id="zero" storeOperand={storeOperand} number={0}/>
+                    { selectedMode === 1 && <CSVLink className="log-btn" data={log} headers={headers}>Log</CSVLink> }
                     { selectedMode === 2 && <OperatorButton operation={enter} operator={'Enter'} /> }
                     { selectedMode === 3 &&
                         <div id="parentheses-container">
