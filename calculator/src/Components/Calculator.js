@@ -177,7 +177,7 @@ export default function Calculator() {
                             <NumberButton storeOperand={storeOperand} key={i + 1} number={i + 1} />
                         )
                     }
-                    <div className='button' onClick={() => storeOperand(0)}>
+                    <div className='button' onClick={() => storeOperand("0")}>
                         <div className='number'>0</div>
                     </div>
                     { selectedMode === 1 && <CSVLink className="log-btn" data={log} headers={headers}>Log</CSVLink> }
